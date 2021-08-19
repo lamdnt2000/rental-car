@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Sign Up</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href="/rentalcar/resource/home/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/rentalcar/resource/home/css/shop-homepage.css" rel="stylesheet">
+
+    </head>
+    <body>
+
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+                <div class="container">
+                    <a class="navbar-brand" onclick='window.location.href = "/rentalcar";'>Rental Car</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarResponsive">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="login">Sign In</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Signup">Sign Up</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="ActiveCode">Send OTP</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Cart">Cart</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <br>
+
+            <div class="myform form ">
+                <form action="SignUpProcess" method="POST" id="signupForm">
+                    <div class ="row col-9">
+                        <div class="form-group col-md-6">
+                            <small class="text-dark">Email</small>
+                            <input type="email" name="txtEmail"  class="form-control my-input" >
+                        </div>
+                        <div class="form-group col-md-6">
+                            <small class="text-dark">Full name</small>
+                            <input type="text" name="txtFullName"  class="form-control my-input" >
+                        </div>
+                    </div>
+                    <div class ="row col-9">
+                        <div class="form-group col-md-6">
+                            <small class="text-dark">Phone number</small>
+                            <input type="text" name="txtPhone" class="form-control my-input" placeholder="Ex:0987654321">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <small class="text-dark">Address</small>
+                            <input type="text" name="txtAddress" class="form-control my-input">
+                        </div>
+                    </div>
+                    <div class ="row col-9">
+                        <div class="form-group col-md-6">
+                            <small class="text-dark">Password</small>
+                            <input id="txtPassword" type="password" name="txtPassword"   class="form-control my-input">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <small class="text-dark">Confirm Password</small>
+                            <input id="txtConfirm" type="password" name="txtConfirm"   class="form-control my-input" >
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="text-center row col-9">
+                        <div class="col-md-12">
+                            <button id="submit" type="submit" class="btn btn-block btn-outline-primary">Create Your Free Account</button>
+                        </div>
+                    </div>
+
+
+                </form>
+
+                <br>
+                <div id="message"></div>
+            </div>
+
+
+        </div>
+
+        <script src="/rentalcar/resource/home/vendor/jquery/jquery.min.js"></script>
+        <script src="/rentalcar/resource/home/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/rentalcar/resource/js/jquery-1.12.0.min.js" crossorigin="anonymous"></script>
+        <script src="/rentalcar/resource/js/jquery.validate.min.js"></script>
+        <script src="/rentalcar/resource/js/additional-methods.js"></script>
+        <script type="text/javascript">
+                        $().ready((function () {
+                            $('#signupForm').validate({
+                                rules: {
+                                    txtEmail: {
+                                        required: true,
+                                        email: true
+                                    },
+                                    txtFullName: {
+                                        required: true,
+                                        rangelength: [5, 50]
+                                    },
+                                    txtPassword: {
+                                        required: true,
+                                        rangelength: [6, 50]
+                                    },
+                                    txtConfirm: {
+                                        equalTo: "#txtPassword"
+                                    },
+                                    txtPhone: {
+                                        required: true,
+                                        phoneVN: true
+                                    },
+                                    txtAddress: {
+                                        required: true,
+                                    }
+
+                                },
+                                submitHandler: function (form) {
+                                    $.ajax({
+                                        type: form.method,
+                                        url: form.action,
+                                        data: $(form).serialize(),
+                                        success: function (data) {
+                                            console.log(data);
+                                            var status = data.status;
+                                            var msg = data.message;
+                                            if (status >0 ) {
+                                                
+                                                window.location.href = "login";
+                                            }
+
+                                        }
+                                    });
+                                },
+
+                            })
+                        })
+                                );
+                        $('#submit').click(function () {
+                            if ($('#txtPassword').val() != "" && !$('#txtPassword').valid()) {
+                                $('#txtPassword').val("");
+                                $('#txtConfirm').val("");
+                            }
+
+                        });
+
+        </script>
+    </body>
+</html>
